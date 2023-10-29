@@ -15,6 +15,19 @@ userRouter.get("/",async(req,res)=>{
 
 
 
+userRouter.get("/:id",async(req,res)=>{
+    const {id}= req.params
+    try{
+       const user = await userModel.findOne({_id:id});
+       res.status(200).send(user)
+    }
+    catch(err){
+        res.status(400).send({"error":err})
+    }
+});
+
+
+
 userRouter.post("/signup",async(req,res)=>{
     try{
         const user = new userModel(req.body);
@@ -40,6 +53,8 @@ userRouter.post("/login",async(req,res)=>{
         res.status(400).send({"error":err})
     }
 })
+
+
 
 
 userRouter.patch("/update/:id",async(req,res)=>{
