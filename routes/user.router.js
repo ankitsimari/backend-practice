@@ -26,6 +26,19 @@ userRouter.post("/signup",async(req,res)=>{
     }
 });
 
+userRouter.post("/login",async(req,res)=>{
+    const {email,password}=req.body
+    try{
+    const user = await userModel.findOne({email});
+    if(password==user.password){
+        res.status(200).send({"Login Successful":user})
+    }
+    }
+    catch(err){
+        res.status(400).send({"error":err})
+    }
+})
+
 
 userRouter.patch("/update/:id",async(req,res)=>{
     const {id}=req.params
